@@ -1,7 +1,11 @@
+/// <reference types="cypress" />
+
 Given(
   "Que seja efetuado um GET no endpoint {word}",
   (endpoint) => {
-
+cy.request("GET", endpoint,(response)=>{
+  
+})
   }
 );
 When(
