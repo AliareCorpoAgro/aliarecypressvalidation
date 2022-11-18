@@ -1,9 +1,7 @@
 Given(
   "Que seja efetuado um GET no endpoint {word}",
   (endpoint) => {
-    cy.resquest(endpoint).should((responseUrl)=>{
-        
-    })
+
   }
 );
 When(
