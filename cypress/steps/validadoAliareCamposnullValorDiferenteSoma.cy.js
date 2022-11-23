@@ -12,7 +12,7 @@ When("For validado que nenhum campo seja NULL", () => {
   let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
   expect(newResponse.corporation).to.be.not.null;
   for (let enterprisesBuy of newResponse.enterprises_buy) {
-    // expect(enterprisesBuy.nome).to.be.not.null
+    expect(enterprisesBuy.nome).to.be.not.null
     expect(enterprisesBuy.cnpj).to.be.not.null;
     expect(enterprisesBuy.inscricao_estadual).to.be.not.null;
     expect(enterprisesBuy.data_abertura).to.be.not.null;
@@ -24,7 +24,7 @@ When("For validado que nenhum campo seja NULL", () => {
     expect(especialization.command.type).to.be.not.null;
     expect(especialization.base_contratual).to.be.not.null;
   }
-  
+
   let baseData = newResponse.base_data
   expect(baseData).to.be.not.null;
   let solid = baseData.solid.cust
