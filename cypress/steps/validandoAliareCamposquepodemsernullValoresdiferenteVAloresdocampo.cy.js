@@ -1,15 +1,17 @@
+import { InicializationAcess } from "../components/component";
+
+const acess = new InicializationAcess();
+
 Given(
   "Que seja efetuado um get no endpoint da mockableTwo {word}",
   (endpoint) => {
-    cy.request("GET", endpoint).should((response) => {
-      sessionStorage.setItem("JSONTwo", JSON.stringify(response.body));
-    });
+    acess.acessInicialization(endpoint);
   }
 );
 When(
   "For validado que so os campos price_sign currency rating category podem ter o valor null",
   () => {
-    let newResponse = JSON.parse(sessionStorage.getItem("JSONTwo"));
+    let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     for (newResponse of newResponse) {
       expect(newResponse.id).to.be.not.null;
       expect(newResponse.brand).to.be.not.null;
@@ -32,7 +34,7 @@ When(
 And(
   "For validado a quantidade dentro do campo product_color pois so podem ter 20 itens",
   () => {
-    let newResponse = JSON.parse(sessionStorage.getItem("JSONTwo"));
+    let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     for (newResponse of newResponse) {
       let productColor = newResponse.product_colors.length;
       if (productColor > 20) {
@@ -46,11 +48,13 @@ And(
 And(
   "For validado a quantidade dentro do campo tag_list pos so e permitido 10 itens",
   () => {
-    let newResponse = JSON.parse(sessionStorage.getItem("JSONTwo"));
+    let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     for (newResponse of newResponse) {
       let tagList = newResponse.tag_list.length;
       if (tagList > 10) {
-        throw new Error(`O campo tag_list só pode ter 10 itens e o id: ${newResponse.id}, do nome: ${newResponse.name} tem ${tagList} itens`);
+        throw new Error(
+          `O campo tag_list só pode ter 10 itens e o id: ${newResponse.id}, do nome: ${newResponse.name} tem ${tagList} itens`
+        );
       }
     }
   }
@@ -58,11 +62,13 @@ And(
 Then(
   "Sera validado o campo product_type nao pode ter o valor em analise",
   () => {
-    let newResponse = JSON.parse(sessionStorage.getItem("JSONTwo"));
+    let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     for (newResponse of newResponse) {
       let productType = newResponse.product_type;
       if (productType === "em analise") {
-        throw new Error(`O campo product_type nao pode ter o valor em analise e o id: ${newResponse.id}, do nome ${newResponse.name} tem o campo ${productType}`);
+        throw new Error(
+          `O campo product_type nao pode ter o valor em analise e o id: ${newResponse.id}, do nome ${newResponse.name} tem o campo ${productType}`
+        );
       }
     }
   }
