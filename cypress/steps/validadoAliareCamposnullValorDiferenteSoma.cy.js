@@ -2,7 +2,7 @@
 
 import { InicializationAcess } from "../components/component";
 
-const acess = new InicializationAcess()
+const acess = new InicializationAcess();
 
 Given("Que seja efetuado um GET no endpoint {word}", (endpoint) => {
   acess.acessInicialization(endpoint);
@@ -11,7 +11,7 @@ When("For validado que nenhum campo seja NULL", () => {
   let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
   expect(newResponse.corporation).to.be.not.null;
   for (let enterprisesBuy of newResponse.enterprises_buy) {
-    expect(enterprisesBuy.nome).to.be.not.null
+    expect(enterprisesBuy.nome).to.be.not.null;
     expect(enterprisesBuy.cnpj).to.be.not.null;
     expect(enterprisesBuy.inscricao_estadual).to.be.not.null;
     expect(enterprisesBuy.data_abertura).to.be.not.null;
@@ -24,9 +24,9 @@ When("For validado que nenhum campo seja NULL", () => {
     expect(especialization.base_contratual).to.be.not.null;
   }
 
-  let baseData = newResponse.base_data
+  let baseData = newResponse.base_data;
   expect(baseData).to.be.not.null;
-  let solid = baseData.solid.cust
+  let solid = baseData.solid.cust;
   expect(solid).to.be.not.null;
 
   let enterprisesBuyAgro = newResponse.enterprises_buy_agro;
@@ -45,32 +45,32 @@ When("For validado que nenhum campo seja NULL", () => {
   }
 });
 And(
-  "For validado que o campo tipo enterprises_buy nao pode ter o valor diferente de VENDA ou NEGOCIO",
-  () => {
+  "For validado que o campo tipo enterprises_buy nao pode ter o valor diferente de {word} ou {word}",
+  (valueOne, valueTwo) => {
     let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     let enterprisesBuy = newResponse.enterprises_buy;
     for (enterprisesBuy of newResponse.enterprises_buy) {
       let tipo = enterprisesBuy.tipo;
-      if (tipo === "VENDA" || tipo === "NEGOCIO") {
-      } else
+      if (tipo !== valueOne && tipo !== valueTwo) {
         throw new Error(
           `O campo tipo so pode conter o valor de VENDA ou NEGOCIO e o campo do nome: ${enterprisesBuy.nome} esta com o valor ${tipo}`
         );
+      }
     }
   }
 );
 And(
-  "For validado o campo tipo de enterprises_buy_agro nao pode ter o valor diferente de AGRO e AFRE",
-  () => {
+  "For validado o campo tipo de enterprises_buy_agro nao pode ter o valor diferente de {word} e {word}",
+  (valueOne, valueTwo) => {
     let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     let enterprisesBuyAgro = newResponse.enterprises_buy_agro;
     for (enterprisesBuyAgro of newResponse.enterprises_buy_agro) {
       let tipo = enterprisesBuyAgro.tipo;
-      if (tipo === "AGRO" || tipo === "AFRE") {
-      } else
+      if (tipo !== valueOne && tipo !== valueTwo) {
         throw new Error(
           `O campo tipo so pode conter o valor de AGRO ou AFRE e o campo do nome: ${enterprisesBuyAgro.nome} esta com o valor ${tipo}`
         );
+      }
     }
   }
 );
@@ -82,7 +82,9 @@ And("For validado a soma total dos campo base_contratual", () => {
     let baseContratual = enterprisesBuy.especialization.base_contratual;
     let sumBaseContratual = parseInt(baseContratual);
     valueTotal = valueTotal + sumBaseContratual;
-    console.log(`O valor total do campo base_contratual da enterprises_buy e ${valueTotal}`)
+    console.log(
+      `O valor total do campo base_contratual da enterprises_buy e ${valueTotal}`
+    );
   }
   let enterprisesBuyAgro = newResponse.enterprises_buy;
   let valueTotalAgro = 0;
@@ -90,26 +92,34 @@ And("For validado a soma total dos campo base_contratual", () => {
     let baseContratualAgro = enterprisesBuy.especialization.base_contratual;
     let sumBaseContratualAgro = parseInt(baseContratualAgro);
     valueTotalAgro = valueTotalAgro + sumBaseContratualAgro;
-    console.log(`O valor total do campo base_contratual da enterprises_buy_agro e ${valueTotal}`)
+    console.log(
+      `O valor total do campo base_contratual da enterprises_buy_agro e ${valueTotal}`
+    );
   }
 });
 Then(
-  "Sera validado que o campo type nao pode ter o valor diferente de contrato anual",
-  () => {
+  "Sera validado que o campo type nao pode ter o valor diferente de {string}",
+  (valueType) => {
     let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     let enterprisesBuy = newResponse.enterprises_buy;
     for (enterprisesBuy of newResponse.enterprises_buy) {
-     let especialization = enterprisesBuy.especialization
-     let type = especialization.command.type
-     if(type === "contrato anual"){
-     }else throw new Error(`O campo type da enterprises_buy so pode conter o valor contrato anual e o campo do nome: ${enterprisesBuy.nome} tem o valor ${type}`)
+      let especialization = enterprisesBuy.especialization;
+      let type = especialization.command.type;
+      if (type !== valueType) {
+        throw new Error(
+          `O campo type da enterprises_buy so pode conter o valor contrato anual e o campo do nome: ${enterprisesBuy.nome} tem o valor ${type}`
+        );
+      }
     }
     let enterprisesBuyAgro = newResponse.enterprises_buy_agro;
     for (enterprisesBuyAgro of newResponse.enterprises_buy_agro) {
-     let especializationAgro = enterprisesBuyAgro.especialization
-     let type = especializationAgro.command.type
-     if(type === "contrato anual"){
-     }else throw new Error(`O campo type da enterprises_buy_agro so pode conter o valor contrato anual e o campo do nome: ${enterprisesBuy.nome} tem o valor ${type}`)
+      let especializationAgro = enterprisesBuyAgro.especialization;
+      let type = especializationAgro.command.type;
+      if (type !== valueType) {
+        throw new Error(
+          `O campo type da enterprises_buy_agro so pode conter o valor contrato anual e o campo do nome: ${enterprisesBuy.nome} tem o valor ${type}`
+        );
+      }
     }
   }
 );

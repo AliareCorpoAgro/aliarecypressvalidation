@@ -6,4 +6,4 @@ Feature: Validar que nem um campo seja null, valores nao seja diferente do surge
     And For validado que o campo tipo enterprises_buy nao pode ter o valor diferente de VENDA ou NEGOCIO
     And For validado o campo tipo de enterprises_buy_agro nao pode ter o valor diferente de AGRO e AFRE
     And For validado a soma total dos campo base_contratual
-    Then Sera validado que o campo type nao pode ter o valor diferente de contrato anual
+    Then Sera validado que o campo type nao pode ter o valor diferente de "contrato anual"

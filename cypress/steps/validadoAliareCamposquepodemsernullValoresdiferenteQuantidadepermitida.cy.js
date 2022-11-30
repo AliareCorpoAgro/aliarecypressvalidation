@@ -38,61 +38,60 @@ And(
     for (newResponse of newResponse) {
       let tagList = newResponse.tag_list.length;
       let productType = newResponse.product_type.length;
-      // console.log(`O id: ${newResponse.id} contem ${tagList} itens na tag_list`)
-      // console.log(`O id: ${newResponse.id} contem ${productType} intes no product_colors`)
+      console.log(`O id: ${newResponse.id} contem ${tagList} itens na tag_list e contem ${productType} no product_colors`)
     }
   }
 );
 And(
-  "For validado que o campo rating tiver o valor zero deve ser informado",
-  () => {
+  "For validado que o campo rating tiver o valor {int} deve ser informado",
+  (numberZero) => {
     let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     for (newResponse of newResponse) {
       let rating = newResponse.rating;
-      if (rating === 0) {
-        // throw new Error(`O id: ${newResponse.id} tem o rating igual a ${rating}, e nao pode ter o valor igual a zero`)
+      if (rating === numberZero) {
+        throw new Error(`O id: ${newResponse.id} tem o rating igual a ${rating}, e nao pode ter o valor igual a zero`)
       }
     }
   }
 );
-And("For validado o campo category nao pode conter o valor invalid", () => {
+And("For validado o campo category nao pode conter o valor {word}", (valueCategory) => {
   let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
   for (newResponse of newResponse) {
     let category = newResponse.category;
-    if (category === "invalid") {
-      // throw new Error(`O id: ${newResponse.id} tem o category com o valor ${category}, e nao pode conter o valor invalid`)
+    if (category === valueCategory) {
+      throw new Error(`O id: ${newResponse.id} tem o category com o valor ${category}, e nao pode conter o valor invalid`)
     }
   }
 });
 And(
-  "For validado se o campo currency se igual a 1000 o campo rating precisa esta igual ou acima de 9.5 nao pode ultrapassar 10",
-  () => {
+  "For validado se o campo currency se igual a {int} o campo rating precisa esta igual ou acima de {float} nao pode ultrapassar {int}",
+  (numberCurrency, numberRatingFloat, numberRatingInt) => {
     let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     for (newResponse of newResponse) {
       let currency = newResponse.currency;
       let currenctInt = parseInt(currency)
       let rating = newResponse.rating;
       let ratingFloat = parseFloat(rating)
-      if (currenctInt === 1000) {
-        if (ratingFloat < 9.5 || ratingFloat > 10) {
-            throw new Error(`O id: ${newResponse.id} esta inrregular, pois 0 campo currency e igual a ${currenctInt} e o campo rating esta com o valor ${ratingFloat} e nao conduz com o que foi passado`)
+      if (currenctInt === numberCurrency) {
+        if (ratingFloat < numberRatingFloat || ratingFloat > numberRatingInt) {
+            throw new Error(`O id: ${newResponse.id} esta inrregular, pois o campo rating esta com o valor ${ratingFloat}, e deve ser igual a 9.5 ou acima e nao pode ultapassar 10`)
         }
       }
     }
   }
 );
 Then(
-  "Sera validado tag_list e product_colors nao pode ter o valor maior que 10",
-  () => {
+  "Sera validado tag_list e product_colors nao pode ter o valor maior que {word}",
+  (numberTagList) => {
     let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     for (newResponse of newResponse){
         let tagList = newResponse.tag_list.length
         let productColor = newResponse.product_colors.length
-        if(tagList > 10){
-            throw new Error(`O campo tag_list nao pode ter o valor maior do que 10, e o valor atual e ${tagList}, do id: ${newResponse.id}`)
+        if(tagList > numberTagList){
+            throw new Error(`O id: ${newResponse.id} tem o campo tag_list com o valor maior que 10, e o valor atual do campo e ${tagList}`)
         }
-        if(productColor > 10){
-            throw new Error(`O campo prodct_colors nao pode ter o valor maior do que 10, e o valor atual e ${productColor}, do id: ${newResponse.id}`)
+        if(productColor > numberTagList){
+            throw new Error(`O id: ${newResponse.id} tem o campo product_colors com o valor maior que 10, e o valor atual do campo e ${productColor}`)
         }
     }
   }

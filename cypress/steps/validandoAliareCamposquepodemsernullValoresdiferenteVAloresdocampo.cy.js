@@ -32,42 +32,48 @@ When(
   }
 );
 And(
-  "For validado a quantidade dentro do campo product_color pois so podem ter 20 itens",
-  () => {
+  "For validado a quantidade dentro do campo product_colors pois so podem ter {int} itens",
+  (numberProductColors) => {
     let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     for (newResponse of newResponse) {
       let productColor = newResponse.product_colors.length;
-      if (productColor > 20) {
+      console.log(
+        `A empresa ${newResponse.name} tem ${productColor} itens no campo product_color`
+      );
+      if (productColor > numberProductColors) {
         throw new Error(
-          `O campo product_color só pode ter 20 itens e o id: ${newResponse.id}, do nome: ${newResponse.name} tem ${productColor} itens`
+          `O campo product_color só pode ter 20 itens e a empresa ${newResponse.name} tem ${productColor} itens`
         );
       }
     }
   }
 );
 And(
-  "For validado a quantidade dentro do campo tag_list pos so e permitido 10 itens",
-  () => {
+  "For validado a quantidade dentro do campo tag_list pos so e permitido {int} itens",
+  (numberTagList) => {
     let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     for (newResponse of newResponse) {
       let tagList = newResponse.tag_list.length;
-      if (tagList > 10) {
+      console.log(
+        `A empresa ${newResponse.name} tem ${tagList} itens no campo tag_list`
+      );
+      if (tagList > numberTagList) {
         throw new Error(
-          `O campo tag_list só pode ter 10 itens e o id: ${newResponse.id}, do nome: ${newResponse.name} tem ${tagList} itens`
+          `O campo tag_list só pode ter 10 itens e a empresa ${newResponse.name} tem ${tagList} itens`
         );
       }
     }
   }
 );
 Then(
-  "Sera validado o campo product_type nao pode ter o valor em analise",
-  () => {
+  "Sera validado o campo product_type nao pode ter o valor {string}",
+  (valueProductType) => {
     let newResponse = JSON.parse(sessionStorage.getItem("JSONGet"));
     for (newResponse of newResponse) {
       let productType = newResponse.product_type;
-      if (productType === "em analise") {
+      if (productType === valueProductType) {
         throw new Error(
-          `O campo product_type nao pode ter o valor em analise e o id: ${newResponse.id}, do nome ${newResponse.name} tem o campo ${productType}`
+          `O campo product_type nao pode ter o valor em analise e a empresa ${newResponse.name} tem o campo ${productType}, id: ${newResponse.id}`
         );
       }
     }
